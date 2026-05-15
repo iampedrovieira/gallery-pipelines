@@ -47,5 +47,6 @@ jobs:
             -e APP_NETWORK_PROXY="${{ secrets.APP_NETWORK_PROXY }}" \
             -e NO_PROXY="${{ secrets.OTEL_EXPORTER_DOMAIN }},localhost,127.0.0.1" \
             -e OTEL_EXPORTER_OTLP_HEADERS="${{ secrets.OTEL_EXPORTER_OTLP_HEADERS }}" \
+            -e OTEL_EXPORTER_OTLP_ENDPOINT="${{ secrets.OTEL_EXPORTER_OTLP_ENDPOINT }}" \
             -e USER_AGENT="${{ secrets.USER_AGENT }}" \
             ${{ secrets.EXTRACTOR_IMAGE }}
