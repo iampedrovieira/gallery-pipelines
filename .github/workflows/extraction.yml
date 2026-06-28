@@ -49,4 +49,5 @@ jobs:
             -e OTEL_EXPORTER_OTLP_HEADERS="${{ secrets.OTEL_EXPORTER_OTLP_HEADERS }}" \
             -e OTEL_EXPORTER_OTLP_ENDPOINT="${{ secrets.OTEL_EXPORTER_OTLP_ENDPOINT }}" \
             -e USER_AGENT="${{ secrets.USER_AGENT }}" \
+            -e REDDIT_COOKIE="${{ secrets.REDDIT_COOKIE }}" \
             ${{ secrets.EXTRACTOR_IMAGE }}
