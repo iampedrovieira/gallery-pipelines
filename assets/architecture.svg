@@ -1,0 +1,161 @@
+<svg width="100%" viewBox="0 0 680 760" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>Architecture diagram: Reddit API → Python Worker → Supabase → Next.js</title>
+  <desc>Pipeline showing data extraction from Reddit, processing via Docker/GitHub Actions, storage in Supabase PostgreSQL, and display in a Next.js frontend gallery.</desc>
+
+  <defs>
+    <marker id="arr-sketch" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1.5 1.5L8 5L1.5 8.5" fill="none" stroke="context-stroke" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <filter id="sketch" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+
+    <g id="reddit-logo">
+      <circle cx="0" cy="0" r="16" fill="#FF4500"/>
+      <ellipse cx="0" cy="2" rx="9" ry="8" fill="white"/>
+      <circle cx="-3" cy="0" r="2" fill="#FF4500"/>
+      <circle cx="3" cy="0" r="2" fill="#FF4500"/>
+      <circle cx="-3" cy="0" r="1" fill="white"/>
+      <circle cx="3" cy="0" r="1" fill="white"/>
+      <path d="M-3.5 4.5 Q0 7 3.5 4.5" fill="none" stroke="#FF4500" stroke-width="1.2" stroke-linecap="round"/>
+      <circle cx="-9" cy="-1" r="3" fill="white"/>
+      <circle cx="9" cy="-1" r="3" fill="white"/>
+      <circle cx="6" cy="-10" r="3" fill="#FF4500"/>
+      <path d="M3 -9 Q4 -6 2 -3" fill="none" stroke="#FF4500" stroke-width="1.3" stroke-linecap="round"/>
+    </g>
+
+    <g id="python-logo">
+      <path d="M-8 -9 Q-8 -16 0 -16 Q8 -16 8 -9 L8 0 Q8 4 4 4 L-4 4 Q-8 4 -8 8 L-8 15 Q-8 16 -14 16 L-14 8 Q-14 0 -8 0 Z" fill="#3776AB"/>
+      <path d="M8 9 Q8 16 0 16 Q-8 16 -8 9 L-8 0 Q-8 -4 -4 -4 L4 -4 Q8 -4 8 -8 L8 -15 Q8 -16 14 -16 L14 -8 Q14 0 8 0 Z" fill="#FFD43B"/>
+      <circle cx="-3" cy="-11" r="2.2" fill="white"/>
+      <circle cx="3" cy="11" r="2.2" fill="white"/>
+    </g>
+
+    <g id="docker-logo">
+      <rect x="-16" y="-10" width="32" height="20" rx="4" fill="#2496ED"/>
+      <rect x="-12" y="-6" width="6" height="5" rx="1" fill="white" opacity="0.9"/>
+      <rect x="-4" y="-6" width="6" height="5" rx="1" fill="white" opacity="0.9"/>
+      <rect x="4" y="-6" width="6" height="5" rx="1" fill="white" opacity="0.9"/>
+      <rect x="-12" y="1" width="6" height="5" rx="1" fill="white" opacity="0.9"/>
+      <rect x="-4" y="1" width="6" height="5" rx="1" fill="white" opacity="0.9"/>
+      <path d="M9 -10 Q18 -16 18 -10" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    </g>
+
+    <g id="github-logo">
+      <circle cx="0" cy="0" r="16" fill="#24292E"/>
+      <path d="M0 -9 C-5 -9 -9 -5 -9 0 C-9 4 -6.5 7.5 -3 8.5 L-3 6 C-4.5 6 -5.5 5 -6 3.5 C-6.2 3 -6.6 2.5 -7 2.5 C-7.5 2.5 -7.5 2 -7.5 2 C-7.5 1.5 -7 1.5 -7 1.5 C-6 1.5 -5.5 2.5 -5.5 2.5 C-4.5 4.5 -3 4 -3 4 L-3 2.5 C-5 2 -6 1 -6 0 C-6 -1 -5 -2 -3 -2.5 L-3 -4 C-4 -4 -4.5 -4.5 -4.5 -5 C-4.5 -6 -3.5 -6 -3.5 -6 C-3.5 -6 -3.5 -7 -3 -7 C-2 -7 -1.5 -6.5 -1.5 -5.5 C-1.5 -5.5 0 -5 0 -4.5 C0 -4.5 1.5 -5 1.5 -5.5 C1.5 -6.5 2 -7 3 -7 C3.5 -7 3.5 -6 3.5 -6 C3.5 -6 4.5 -6 4.5 -5 C4.5 -4.5 4 -4 3 -4 L3 -2.5 C5 -2 6 -1 6 0 C6 1 5 2 3 2.5 L3 4 C3 4 1.5 4.5 0.5 2.5 C0.5 2.5 0 1.5 1 1.5 C1 1.5 1.5 1.5 1.5 2 C1.5 2 1.5 2.5 1 2.5 C0.5 3.5 0 6 3 6 L3 8.5 C6.5 7.5 9 4 9 0 C9 -5 5 -9 0 -9 Z" fill="white"/>
+    </g>
+
+    <g id="otel-logo">
+      <circle cx="0" cy="0" r="12" fill="#F5A800" opacity="0.15"/>
+      <line x1="-8" y1="-6" x2="8" y2="-6" stroke="#F5A800" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-8" y1="0" x2="4" y2="0" stroke="#F5A800" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-8" y1="6" x2="8" y2="6" stroke="#F5A800" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="8" cy="0" r="3.5" fill="#F5A800"/>
+    </g>
+
+    <g id="grafana-logo">
+      <circle cx="0" cy="0" r="13" fill="#F46800" opacity="0.15"/>
+      <circle cx="0" cy="0" r="8" fill="none" stroke="#F46800" stroke-width="2"/>
+      <path d="M0 -8 A8 8 0 0 1 6.9 4" fill="none" stroke="#F46800" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="0" cy="-8" r="2.5" fill="#F46800"/>
+      <circle cx="6.9" cy="4" r="2.5" fill="#F46800"/>
+    </g>
+
+    <g id="supabase-logo">
+      <path d="M-7 -14 L6 2 L0 2 L7 14 L-7 -1 L0 -1 Z" fill="#3ECF8E"/>
+    </g>
+
+    <g id="pg-logo">
+      <ellipse cx="0" cy="-2" rx="10" ry="12" fill="#336791"/>
+      <ellipse cx="0" cy="-12" rx="10" ry="4" fill="#336791"/>
+      <ellipse cx="0" cy="-12" rx="10" ry="4" fill="none" stroke="#5da8d1" stroke-width="0.8"/>
+      <path d="M-10 -12 L-10 2 Q-10 10 0 10 Q10 10 10 2 L10 -12" fill="none" stroke="#5da8d1" stroke-width="0.8"/>
+      <path d="M5 -6 Q8 -4 8 0 Q8 6 5 8" fill="none" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M5 -2 L9 -2" fill="none" stroke="white" stroke-width="1.2"/>
+    </g>
+
+    <g id="nextjs-logo">
+      <circle cx="0" cy="0" r="14" fill="#000"/>
+      <text x="-1" y="5" text-anchor="middle" font-size="13" font-weight="700" fill="white" font-family="Arial, sans-serif">N</text>
+    </g>
+  </defs>
+
+  <!-- NODE 1: Reddit API -->
+  <rect x="202" y="32" width="278" height="86" rx="12" fill="none" stroke="#cccccc" stroke-width="1.2" opacity="0.4" filter="url(#sketch)"/>
+  <rect x="200" y="30" width="278" height="86" rx="12" fill="white" stroke="#333333" stroke-width="2" filter="url(#sketch)"/>
+  <use href="#reddit-logo" transform="translate(238, 73)"/>
+  <text x="340" y="61" text-anchor="middle" font-size="15" font-weight="600" fill="#111111" font-family="'Segoe UI', Arial, sans-serif">Reddit API</text>
+  <text x="340" y="96" text-anchor="middle" font-size="12" fill="#666666" font-family="'Segoe UI', Arial, sans-serif">Posts, comments &amp; media</text>
+
+  <!-- ARROW 1 → 2 -->
+  <path d="M340 118 Q340 148 340 168" fill="none" stroke="#999999" stroke-width="2.2" stroke-linecap="round" marker-end="url(#arr-sketch)" filter="url(#sketch)"/>
+  <rect x="299" y="133" width="82" height="20" rx="4" fill="white" opacity="0.9"/>
+  <text x="340" y="147" text-anchor="middle" font-size="11" fill="#888888" font-family="'Segoe UI', Arial, sans-serif">fetch data</text>
+
+  <!-- NODE 2: Extraction Worker -->
+  <rect x="201" y="170" width="277" height="190" rx="12" fill="white" stroke="#333333" stroke-width="2" filter="url(#sketch)"/>
+  <path d="M412 170 Q465 162 478 174" fill="none" stroke="#cccccc" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="340" y="197" text-anchor="middle" font-size="15" font-weight="600" fill="#111111" font-family="'Segoe UI', Arial, sans-serif">Extraction Worker</text>
+  <use href="#python-logo" transform="translate(237, 224)"/>
+  <text x="258" y="247" text-anchor="middle" font-size="10" fill="#3776AB" font-family="'Segoe UI', Arial, sans-serif" font-weight="600">Python</text>
+  <use href="#docker-logo" transform="translate(340, 220)"/>
+  <text x="340" y="247" text-anchor="middle" font-size="10" fill="#2496ED" font-family="'Segoe UI', Arial, sans-serif" font-weight="600">Docker</text>
+  <use href="#github-logo" transform="translate(443, 224)"/>
+  <text x="443" y="247" text-anchor="middle" font-size="10" fill="#444444" font-family="'Segoe UI', Arial, sans-serif" font-weight="600">GH Actions</text>
+  <line x1="222" y1="258" x2="458" y2="258" stroke="#dddddd" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="226" y="276" font-size="12" fill="#555555" font-family="'Segoe UI', Arial, sans-serif">✦  Fetch posts &amp; comments</text>
+  <text x="226" y="296" font-size="12" fill="#555555" font-family="'Segoe UI', Arial, sans-serif">✦  Image color analysis</text>
+  <text x="226" y="316" font-size="12" fill="#555555" font-family="'Segoe UI', Arial, sans-serif">✦  Observability</text>
+  <use href="#otel-logo" transform="translate(340, 316)"/>
+  <text x="356" y="320" font-size="11" fill="#F5A800" font-family="'Segoe UI', Arial, sans-serif">OpenTelemetry</text>
+  <text x="356" y="332" font-size="10" fill="#aaaaaa" font-family="'Segoe UI', Arial, sans-serif">→</text>
+  <use href="#grafana-logo" transform="translate(386, 337)"/>
+  <text x="402" y="341" font-size="11" fill="#F46800" font-family="'Segoe UI', Arial, sans-serif">Grafana</text>
+
+  <!-- ARROW 2 → 3 -->
+  <path d="M340 362 Q340 390 340 410" fill="none" stroke="#999999" stroke-width="2.2" stroke-linecap="round" marker-end="url(#arr-sketch)" filter="url(#sketch)"/>
+  <rect x="290" y="375" width="100" height="20" rx="4" fill="white" opacity="0.9"/>
+  <text x="340" y="389" text-anchor="middle" font-size="11" fill="#888888" font-family="'Segoe UI', Arial, sans-serif">write records</text>
+
+  <!-- NODE 3: Supabase -->
+  <rect x="201" y="412" width="277" height="110" rx="12" fill="white" stroke="#333333" stroke-width="2" filter="url(#sketch)"/>
+  <text x="340" y="438" text-anchor="middle" font-size="15" font-weight="600" fill="#111111" font-family="'Segoe UI', Arial, sans-serif">Supabase</text>
+  <use href="#supabase-logo" transform="translate(283, 474)"/>
+  <text x="283" y="496" text-anchor="middle" font-size="10" fill="#3ECF8E" font-family="'Segoe UI', Arial, sans-serif" font-weight="600">Supabase</text>
+  <line x1="308" y1="458" x2="308" y2="492" stroke="#dddddd" stroke-width="1"/>
+  <use href="#pg-logo" transform="translate(350, 468)"/>
+  <text x="350" y="496" text-anchor="middle" font-size="10" fill="#336791" font-family="'Segoe UI', Arial, sans-serif" font-weight="600">PostgreSQL</text>
+  <rect x="219" y="500" width="240" height="16" rx="4" fill="#3ECF8E" opacity="0.1"/>
+  <text x="339" y="512" text-anchor="middle" font-size="10.5" fill="#3ECF8E" font-family="'Segoe UI', Arial, sans-serif" font-weight="500">shared data layer</text>
+
+  <!-- ARROW 3 → 4 -->
+  <path d="M340 524 Q340 554 340 574" fill="none" stroke="#999999" stroke-width="2.2" stroke-linecap="round" marker-end="url(#arr-sketch)" filter="url(#sketch)"/>
+  <rect x="288" y="539" width="104" height="20" rx="4" fill="white" opacity="0.9"/>
+  <text x="340" y="553" text-anchor="middle" font-size="11" fill="#888888" font-family="'Segoe UI', Arial, sans-serif">query / read</text>
+
+  <!-- NODE 4: Frontend Next.js -->
+  <rect x="201" y="576" width="277" height="100" rx="12" fill="white" stroke="#333333" stroke-width="2" filter="url(#sketch)"/>
+  <text x="340" y="603" text-anchor="middle" font-size="15" font-weight="600" fill="#111111" font-family="'Segoe UI', Arial, sans-serif">Frontend</text>
+  <use href="#nextjs-logo" transform="translate(298, 638)"/>
+  <text x="298" y="662" text-anchor="middle" font-size="10" fill="#111111" font-family="'Segoe UI', Arial, sans-serif" font-weight="600">Next.js</text>
+  <line x1="324" y1="622" x2="324" y2="652" stroke="#dddddd" stroke-width="1"/>
+  <text x="354" y="636" font-size="12.5" fill="#555555" font-family="'Segoe UI', Arial, sans-serif">Gallery web app</text>
+  <text x="354" y="653" font-size="11" fill="#aaaaaa" font-family="'Segoe UI', Arial, sans-serif">Browse &amp; explore posts</text>
+
+  <!-- SIDE ANNOTATIONS -->
+  <path d="M480 215 Q540 215 560 215" fill="none" stroke="#cccccc" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <rect x="560" y="200" width="90" height="30" rx="6" fill="#FFF9EC" stroke="#F5A800" stroke-width="1.2"/>
+  <text x="605" y="219" text-anchor="middle" font-size="10.5" fill="#B47E00" font-family="'Segoe UI', Arial, sans-serif" font-weight="600">CI / CD run</text>
+
+  <path d="M480 465 Q540 465 560 465" fill="none" stroke="#cccccc" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <rect x="560" y="450" width="90" height="30" rx="6" fill="#EDFAF4" stroke="#3ECF8E" stroke-width="1.2"/>
+  <text x="605" y="469" text-anchor="middle" font-size="10.5" fill="#1A8A5A" font-family="'Segoe UI', Arial, sans-serif" font-weight="600">Managed DB</text>
+
+  <!-- Side label: public API -->
+  <path d="M68 73 Q95 73 118 73" fill="none" stroke="#cccccc" stroke-width="1.5" stroke-dasharray="3 4" marker-end="url(#arr-sketch)"/>
+  <text x="40" y="68" font-size="10" fill="#aaaaaa" font-family="'Segoe UI', Arial, sans-serif" text-anchor="middle">public</text>
+  <text x="40" y="80" font-size="10" fill="#aaaaaa" font-family="'Segoe UI', Arial, sans-serif" text-anchor="middle">API</text>
+
+</svg>
