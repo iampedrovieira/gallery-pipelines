@@ -50,4 +50,5 @@ jobs:
             -e OTEL_EXPORTER_OTLP_ENDPOINT="${{ secrets.OTEL_EXPORTER_OTLP_ENDPOINT }}" \
             -e USER_AGENT="${{ secrets.USER_AGENT }}" \
             -e REDDIT_COOKIE="${{ secrets.REDDIT_COOKIE }}" \
+            -e LOG_VISIBILITY="${{ secrets.LOG_VISIBILITY }}" \
             ${{ secrets.EXTRACTOR_IMAGE }}
