@@ -65,7 +65,7 @@ Pipeline logs are anonymized in CI: subreddit names, post titles, and infrastruc
 
 ### Grafana Dashboard
 
-[View the Grafana snapshot](https://iampedrovieira.grafana.net/dashboard/snapshot/MAVdAcuxRSaMvBMBmCnH8KQQV2V0l4lH?orgId=1&from=now-7d&to=now&timezone=browser)
+[View the Grafana snapshot](https://iampedrovieira.grafana.net/dashboard/snapshot/KsTNEpGhXSFIeK89lbppCsEMCrUC4mDb)
 
 This snapshot shows the current pipeline telemetry and observability view.
 
